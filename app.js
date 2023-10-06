@@ -40,7 +40,7 @@ if (!process.env.FORK) {
   winston.info('  888 .  888      888   888  888   888  888    .o o.  )88b  888 `88b.')
   winston.info('  "888" d888b     `V88V"V8P\' `Y8bod88P" `Y8bod8P\' 8""888P\' o888o o888o')
   winston.info('==========================================================================')
-  winston.info('trudesk v' + pkg.version + ' Copyright (C) 2014-2023 Chris Brame')
+  winston.info('trudesk v' + pkg.version + ' ArThink')
   winston.info('')
   winston.info('Running in: ' + global.env)
   winston.info('Server Time: ' + new Date())
@@ -67,7 +67,7 @@ function launchInstallServer () {
 
   const ws = require('./src/webserver')
   ws.installServer(function () {
-    return winston.info('Trudesk Install Server Running...')
+    return winston.info('ArThink Install Server Running...')
   })
 }
 

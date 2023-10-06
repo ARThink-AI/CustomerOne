@@ -223,6 +223,13 @@ function downloadWin32MongoDBTools (callback) {
               .on('close', function () {
                 fs.unlink(path.join(savePath, filename), callback)
               })
+              .on('error', function (unzipError) {  // <-- Add this part for unzip error
+
+                winston.warn('Error during unzip:', unzipError.message);
+
+                return callback();
+
+              });
           })
         })
         .on('error', function (err) {
