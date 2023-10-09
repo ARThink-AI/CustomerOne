@@ -138,6 +138,17 @@ class Sidebar extends React.Component {
               class='navMessages'
               active={activeItem === 'messages'}
             />
+
+{sessionUser && Helpers.canUser('notices:view') && (
+              <SidebarItem
+                text='Notices'
+                icon='campaign'
+                href='/notices'
+                class='navNotices'
+                active={activeItem === 'notices'}
+              />
+            )}
+
             {sessionUser && Helpers.canUser('accounts:view') && (
               <SidebarItem
                 text='Accounts'
@@ -233,16 +244,7 @@ class Sidebar extends React.Component {
 
             {/*{this.renderPlugins()}*/}
 
-            {sessionUser && Helpers.canUser('notices:view') && (
-              <SidebarItem
-                text='Notices'
-                icon='campaign'
-                href='/notices'
-                class='navNotices'
-                active={activeItem === 'notices'}
-              />
-            )}
-
+          
             {sessionUser && Helpers.canUser('settings:edit') && (
               <SidebarItem
                 text='Settings'

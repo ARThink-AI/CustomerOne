@@ -217,18 +217,71 @@
 </div>
 
 <script type="text/javascript">
+URL="https://staging.bterai.com"
     window.truRequire(['jquery', 'helpers'], function(loadedModules) {
         var $ = loadedModules[0];
         var helpers = loadedModules[1];
         helpers.UI.inputs();
         helpers.UI.waves();
-
         $('#loginForm').submit(function(e) {
             var u = $('#login-username').val();
             var p = $('#login-password').val();
             if (u.length < 4 || p.length < 4)
                 e.preventDefault();
         });
+          const handleLoginSubmit = (e) => {
+
+    e.preventDefault();
+
+    axios({
+
+      url: URL + "/api/v1/support/login",
+
+      method: "POST",
+
+      data: {
+
+        email,
+
+        password: pass,
+
+      },
+
+    })
+
+      .then((user) => {
+
+        dispatch(logIn(user.data.data));
+
+        window.localStorage.setItem("auth", JSON.stringify(user.data?.data));
+
+        //set cookie for name in video calls/screen share
+
+        setCookie("name",user.data.data.name.toString());
+
+        setCookie("nameId",user.data.data.name.toString());
+
+        console.log('user.data.data :>> ', user.data.data.name.toString());
+
+        localStorage.setItem("nameId",user.data.data.name.toString()+222)
+
+      })
+
+      .catch((err) => {
+
+        console.log(err);
+
+        chat.socket?.emit("support_left_chat", chat.receiver?.socketId || "");
+
+        chat.socket?.emit("end");
+
+        dispatch(refresh({}));
+
+        dispatch(logOut({}));
+
+      });
+
+  };
 
         $('#forgotPass').click(function(e) {
             e.preventDefault();
@@ -277,15 +330,15 @@
             return false;
         });
 
-        $(document).ready(function() {
-            if (screen.width <= 800) {
-                document.location = '/mobile';
-            }
+      //  $(document).ready(function() {
+      //      if (screen.width <= 800) {
+        //        document.location = '/mobile';
+        //    }
 
-            setTimeout(function() {
-                $('#login-username').focus();
-            }, 700);
-        });
+         //   setTimeout(function() {
+         //       $('#login-username').focus();
+        //    }, 700);
+      //  });
     });
 </script>
 </body>
